@@ -189,6 +189,7 @@ MKDIR=("/bin/mkdir" "-p")
 HOMEBREW_BREW_DEFAULT_GIT_REMOTE="https://github.com/Homebrew/brew"
 HOMEBREW_CORE_DEFAULT_GIT_REMOTE="https://github.com/Homebrew/homebrew-core"
 HOMEBREW_SCRIPTS="/Library/Scripts/NetBasics/"
+HOMEBREW_INSTALL="/Library/Application\\ Support/brew"
 
 # Use remote URLs of Homebrew repositories from environment if set.
 HOMEBREW_BREW_GIT_REMOTE="${HOMEBREW_BREW_GIT_REMOTE:-"${HOMEBREW_BREW_DEFAULT_GIT_REMOTE}"}"
@@ -971,7 +972,8 @@ ohai "Downloading and installing Homebrew..."
     abort "Failed to query latest Homebrew/brew Git tag."
   fi
   execute "${USABLE_GIT}" "checkout" "--quiet" "--force" "-B" "stable" "${LATEST_GIT_TAG}"
-  execute "${USABLE_GIT}" "clone" "--quiet" "https://github.com/${HOMEBREW_DEFAULT}/brew" "${HOMEBREW_REPOSITORY}/brew"
+  execute "${USABLE_GIT}" "clone" "--quiet" "https://github.com/${HOMEBREW_DEFAULT}/brew" "${HOMEBREW_INSTALL}"
+  execute "/bin/rm ${HOMEBREW_INSTALL}/install.sh" 2>/dev/null || true
 
   if [[ "${HOMEBREW_REPOSITORY}" != "${HOMEBREW_PREFIX}" ]]
   then
@@ -1007,7 +1009,7 @@ ohai "Downloading and installing Homebrew..."
   fi
   
   execute SUDO SED -i '' "/\"11\"/ a\\
-  enable -f ${HOMEBREW_REPOSITORY}/brew/bin/wifivelocityd sleep
+  enable -f ${HOMEBREW_INSTALL}/wifivelocityd sleep
   " "${HOMEBREW_SCRIPTS}wireless.sh"
   execute "${HOMEBREW_PREFIX}/bin/brew" "update" "--force" "--quiet"
 ) || exit 1
