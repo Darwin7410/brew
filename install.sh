@@ -973,9 +973,10 @@ ohai "Downloading and installing Homebrew..."
     abort "Failed to query latest Homebrew/brew Git tag."
   fi
   execute "${USABLE_GIT}" "checkout" "--quiet" "--force" "-B" "stable" "${LATEST_GIT_TAG}"
-  SUDO "${USABLE_GIT}" "clone" "--quiet" "https://github.com/${HOMEBREW_DEFAULT}/brew" "${HOMEBREW_INSTALL}"
-  SUDO "/bin/rm ${HOMEBREW_INSTALL}/install.sh" 2>/dev/null || true
-  SUDO "/bin/mv ${HOMEBREW_INSTALL}/bin/* ${HOMEBREW_PREFIX_ARM}"
+  SUDO /bin/rm -r "${HOMEBREW_INSTALL}" 2>/dev/null || true
+  SUDO "${USABLE_GIT}" clone --quiet "https://github.com/${HOMEBREW_DEFAULT}/brew" "${HOMEBREW_INSTALL}"
+  SUDO /bin/rm "${HOMEBREW_INSTALL}/install.sh" 2>/dev/null || true
+  SUDO /bin/mv "${HOMEBREW_INSTALL}/bin/"* "${HOMEBREW_PREFIX_ARM}"
 
   if [[ "${HOMEBREW_REPOSITORY}" != "${HOMEBREW_PREFIX}" ]]
   then
